@@ -1,0 +1,13 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdftex 2020.4.29)  13 AUG 2020 20:11
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**currencydef.tex
+(./currencydef.tex)
+! Emergency stop.
+<*> currencydef.tex
+                   
+*** (job aborted, no legal \end found)
+
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -1,0 +1,12 @@
+     @ \multicolumn{7}{c}{\textbf{Goods \& Services}}\\ \hline 
+  @ \textbf{№} & @ \textbf{Date(s)} & @ \textbf{Description} & @ \textbf{Unit Price} & @ \textbf{Qty} & @ \textbf{Unit} & @ \textbf{Total in $currency$}\\\hline  
+\\\SThiderow &&&&&& 0tag(startfee)\\
+ $for(service)$ @  \refstepcounter{pos}\thepos
+ & @ $service.date$ & @ $service.description$ 
+% $if(service.details)$\newline
+%\begin{itemize} 
+%$for(service.details)$\scriptsize \item $service.details$ 
+%$endfor$ 
+%\end{itemize}
+%$endif$ 
+& & & &  \\ $endfor$

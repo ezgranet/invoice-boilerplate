@@ -1,60 +1,55 @@
-%!TEX TS-program = xelatex
-%!TEX encoding = UTF-8 Unicode
-
-\documentclass[$fontsize$, a4paper]{article}
-
+\documentclass[12pt, a4paper]{article}
+\input{setup/currencydef}
+\usepackage{verbatim}
 % LAYOUT
 %--------------------------------
 \usepackage{geometry} 
-\geometry{$geometry$}
-
-% No page numbers
-\pagenumbering{gobble}
-
-% Left align
-\usepackage[document]{ragged2e}
-
-$if(letterhead)$
-  % To include the letterhead
-  \usepackage{wallpaper}
-  \ULCornerWallPaper{1}{letterhead.pdf}
-$endif$
-
-% TYPOGRAPHY
-%--------------------------------
-\usepackage{fontspec} 
-\usepackage{xunicode}
-\usepackage{xltxtra}
-
-% converts LaTeX specials (quotes, dashes etc.) to Unicode
-\defaultfontfeatures{Mapping=tex-text}
-\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{$seriffont$}
-\setsansfont[Scale=0.9]{$sansfont$}
-
-% Set paragraph break
-\setlength{\parskip}{1em}
-
-% Custom ampersand
-\newcommand{\amper}{{\fontspec[Scale=.95]{$seriffont$}\selectfont\itshape\&}}
-
-$if(seriffont)$
-\setmainfont[SmallCapsFeatures={LetterSpace=5,Letters=SmallCaps}]{$seriffont$}
-$endif$
-$if(sansfont)$
-    \setsansfont{$sansfont$}
-$endif$
-
+\geometry{margin=2.5cm}
+\input{/Users/ezgranet/ezgranet-fonts.tex}
+\usepackage{xfp}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{setspace}
 % Command required by how Pandoc handles the list conversion
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{fontspec}
+
+\RequirePackage{fancyhdr,lastpage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[L]{To: $for(to)$$to.name$ $endfor$}
+\fancyhead[c]{\textsc{\MakeUppercase $from$}\vspace*{1pt}}
+\fancyfoot[c]{Invoice № $invoice-nr$}
+\fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
+\pagestyle{fancy}
+\fancypagestyle{firstpage}{%
+    %pagestyle definition
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhead[c]{}
+    \fancyfoot[c]{}
+    \fancyfoot[l]{}
+\fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
+}
 
 % TABLE CUSTOMIZATION
 %--------------------------------
 \usepackage{spreadtab}
 \usepackage[compact]{titlesec} % For customizing title sections
 \titlespacing*{\section}{0pt}{3pt}{-7pt} % Remove margin bottom from the title
+\usepackage{array}
+\setlength{\arrayrulewidth}{1pt} 
+\newcolumntype{¶}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+  #1\ignorespaces
+}
+
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+
+
 \usepackage{arydshln} % For the dotted line on the table
-\renewcommand{\arraystretch}{1.5} % Apply vertical padding to table cells
 \usepackage{hhline} % For single-cell borders
 \usepackage{enumitem} % For customizing lists
 \setlist{nolistsep} % No whitespace around list items
@@ -62,21 +57,21 @@ $endif$
 \setlength{\tabcolsep}{9pt} % Larger gutter between columns
 
 
-% LANGUAGE
-%--------------------------------
-$if(lang)$
-\usepackage{polyglossia}
-\setmainlanguage{$lang$}
-$endif$
+%% LANGUAGE
+%%--------------------------------
+%$if(lang)$
+%\usepackage{polyglossia}
+%\setmainlanguage{$lang$}
+%$endif$
 
 % PDF SETUP
 %--------------------------------
 \usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
 \hypersetup
 {
-  pdfauthor={$author$},
-  pdfsubject=Invoice Nr. $invoice-nr$,
-  pdftitle=Invoice Nr. $invoice-nr$,
+  pdfauthor={$from$},
+  pdfsubject=Invoice № $invoice-nr$,
+  pdftitle=Invoice № $invoice-nr$,
   linkcolor=blue,
   citecolor=blue,
   filecolor=black,
@@ -92,61 +87,147 @@ $endif$
 % DOCUMENT
 %--------------------------------
 \begin{document}
-\small
-\textsc{\textbf{$author$}}
-$for(from)$
-\textbullet{} \textsc{$from$}
-$endfor$
-
-\vspace{1em}
-
-\normalsize \sffamily
-$for(to)$
-$to$\\
-$endfor$
-
-\vspace{6em}
-
-\begin{flushright}
-  \small
-  $city$, \today
-\end{flushright}
-
-\vspace{1em}
-
-
-\section*{\textsc{Invoice} \textsc{\#$invoice-nr$}}
-\footnotesize
+\thispagestyle{firstpage}
+\singlespacing
+\setlength{\parskip}{1ex}
 \newcounter{pos}
 \setcounter{pos}{0}
-\STautoround*{2} % Get spreadtab to always display the decimal part
-$if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
-
-\begin{spreadtab}{{tabular}[t t t]{lp{8.2cm}r}}
-  \hdashline[1pt/1pt]
-  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Description} & @ \textbf{Prices in $currency$} \\ \hline
-      $for(service)$ @ \noalign{\vskip 2mm} \refstepcounter{pos} \thepos 
-        & @ $service.description$ 
+\STautoround*{2}
+%\begin{comment}
+% Get spreadtab to always display the decimal part
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%THE SECRET TABLE
+%A MYSTERIOUS ITEM WHICH LETS YOU 
+%KNOW THE TOTALS BEFORE THE REAL 
+%TABLE IS PRINTED
+%MYSTICS HAVE LONG SPOKEN OF ITS POWER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{spreadtab}{{tabular}{lllrrrr}}
+\SThidecol & \SThidecol & \SThidecol & \SThidecol & \SThidecol & \SThidecol & \SThidecol
+   \\ &&&&&& 0tag(secretstartfee)\\      $for(service)$ @  \refstepcounter{pos} \thepos 
+        & @ $service.date$ & @ $service.description$ 
         $if(service.details)$\newline \begin{itemize} 
           $for(service.details)$\scriptsize \item $service.details$ 
           $endfor$ \end{itemize}
-          $endif$ & $service.price$\\$endfor$ \noalign{\vskip 2mm} \hline
-  $if(VAT)$
-    @ & @ \multicolumn{1}{r}{Subtotal:}                & :={sum(c1:[0,-1])} \\ \hhline{~~-}
-    @ & @ \multicolumn{1}{r}{VAT $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~-}
-  $endif$
-  @ & @ \multicolumn{1}{r}{\textbf{Total:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\ \hhline{~~-}
-\end{spreadtab}
+          $endif$ & \texttt{\normalsize:={$service.price$}} & \texttt{\normalsize:={$service.qty$}}  & @ $service.unit$ & \texttt{\normalsize:={\fpeval{round($service.price$ * $service.qty$,2)}}}
+\\$endfor$ &&&&&& 0tag(secretendfee)\\  
+  $if(expense)$
+   \\ &&&&&& 0tag(secretstartexpense)\\
+         $for(expense)$ @ \refstepcounter{pos} \thepos 
+        & @ $expense.date$ & @ $expense.description$ 
+        $if(expense.details)$\newline \begin{itemize} 
+          $for(expense.details)$\scriptsize \item $expense.details$ 
+          $endfor$ \end{itemize}
+          $endif$ &&&& \texttt{\normalsize:={$expense.price$}}\\
+          $endfor$ &&&&&& 0tag(secretendexpense)\\
+@ \multicolumn{5}{r}{\textbf{Sum Fees $if(VAT)$ exc VAT $endif$}} & @ \$currency$ & \texttt{\normalsize:={sum(cell(secretstartfee):cell(secretendfee)tag(secretfeetotal))}}\\
+$if(VAT)$
+@ \multicolumn{5}{r}{\textbf{Sum VAT at $VAT$\%}} & @ \$currency$ & \texttt{\normalsize:={$VAT$/100*[0,-1]}}\\$endif$
+@ \multicolumn{5}{r}{\textbf{Sum Expenses}} & @   \$currency$
+&\texttt{\normalsize:={sum(cell(secretstartexpense):cell(secretendexpense))tag(secretexpensetotal)}}\\
+@ \multicolumn{5}{r}{\textbf{GRAND TOTAL}} & @ %
+    \$currency$ & \texttt{\normalsize:={sum(cell(secretexpensetotal);cell(secretfeetotal))tag(secretmytotal)}}
+        $endif$
+\end{spreadtab}\STmakegtag{secretmytotal}
 
+\vspace*{-9.2cm}\hfill\flushright\begin{minipage}[t]{.7\textwidth}
+\flushright
+$from$\\
+$for(fromaddress)$$fromaddress$\\$endfor$
+$fromcity$ \ttfamily$frompostcode$\normalfont\\
+$for(fromcountry)$$fromcountry$\\$endfor$
+tel: \texttt{$fromtel$}\\
+e: \texttt{$fromemail$}\\
+$if(fromvat)$ VAT № \texttt{$fromvat$}\\$endif$
+$if(regnum)$Company № \texttt{$regnum$}\\$endif$
+\end{minipage}
 
-\vspace{15mm}
+	\begin{center}
+
+	\textit{has the pleasure of presenting, with sincerest compliments, to}
+\end{center}
+
+%\setlength{\tabcolsep}{0pt}
+\flushleft\begin{minipage}[t]{.4\textwidth}
+\vspace*{-2em}
+$for(to)$$to.name$ $endfor$\\
+$for(to)$$to.street$$endfor$\\
+$for(to)$$to.city$$endfor$  \footnotesize\ttfamily $for(to)$$to.postcode$$endfor$\\\normalsize\normalfont
+$for(to)$$to.country$$endfor$\\
+e:  \ttfamily $for(to)$$to.email$$endfor$\\
+\end{minipage}
+ 
+\begin{center}
+
+\textit{this}\\
+\LARGE\textbf{\scshape INVOICE}\normalsize
 
 \sffamily
-\small
-$closingnote$
+	\begin{tabular}{¶l^l^l^l}
+\hdashline[1pt/1pt]\\\rowstyle{\bfseries\footnotesize\sffamily}  
+Account № &  Subject&   Issue Date  & \multicolumn{1}{!{\vrule width 1pt}l}{\bfseries Total Due}\\ 
+ \texttt{262} &   \sffamily R V JONES & \ttfamily 2020-08-18 & \multicolumn{1}{!{\vrule width 1pt}l}{\multirow{3}{*}{\LARGE\bfseries\ttfamily \$currency$\xspace  
+ \STtag{secretmytotal}
+ }} \\
+\rowstyle{\bfseries\sffamily}
+ Invoice № &  Sent Via & Due Date & \multicolumn{1}{!{\vrule width 1pt}l}{}  \\ 
+\ttfamily 2020-08-04 & \sffamily E-MAIL & \ttfamily 2020-09-07 &\multicolumn{1}{!{\vrule width 1pt}l}{} \\\\
+	\multicolumn {4}{c}{Please pay the sum due by the due date to:}\\\\
+	\sffamily
+\rowstyle{\bfseries\footnotesize\sffamily}
+PAYEE & Bank & Account №  &  Sort  Code \\\rowstyle{\sffamily}  E Z GRANET & CLAYBARCS
+&  \texttt{ABCDEF12} &  \texttt{12-34-56} \\
+		\rowstyle{\bfseries\footnotesize\sffamily}
+SWIFTBIC & IBAN\\\rowstyle{\ttfamily}BARCME & \multicolumn{3}{l}{\texttt{SM3703225098007222256638953}}\\  \\\hdashline[1pt/1pt]
+			\end{tabular}
+			\end{center}
 
-\medskip
+\sffamily
+%\end{comment}
 
-$author$
+\centering
+\renewcommand{\arraystretch}{1.5} % Apply vertical padding to table cells
+\begin{spreadtab}{{longtable}[t t t]{lp{1cm}p{4cm}rrrr}}
+\hhline{=======}
+@ \multicolumn{7}{c}{\textbf{Goods \& Services}}   \\
+  @ \textbf{№} & @ \textbf{Date(s)} & @ \textbf{Description} & @ \textbf{Unit Price} & @ \textbf{Qty} & @ \textbf{Unit} &  @ \textbf{Total in GBP}
+   \\\SThiderow &&&&&& 0tag(startfee)\\      $for(service)$ @  \refstepcounter{pos} \thepos 
+        & @ $service.date$ & @ $service.description$ 
+        $if(service.details)$\newline \begin{itemize} 
+          $for(service.details)$\footnotesize \item $service.details$ 
+          $endfor$ \end{itemize}
+          $endif$ & \texttt{\normalsize:={$service.price$}} & \texttt{\normalsize:={$service.qty$}}  & @ $service.unit$ & \texttt{\normalsize:={\fpeval{round($service.price$ * $service.qty$,2)}}}
+\\$endfor$\SThiderow &&&&&& 0tag(endfee)\\  
+  $if(expense)$
+ @ \multicolumn{7}{c}{\textbf{Expenses}}\\
+   @ \textbf{№} & @ \textbf{Date(s)} & @ \textbf{Description} &&&&  @ \textbf{Total in $currency$} 
+   \\\SThiderow &&&&&& 0tag(startexpense)\\
+         $for(expense)$ @ \refstepcounter{pos} \thepos 
+        & @ $expense.date$ & @ $expense.description$ 
+        $if(expense.details)$\newline \begin{itemize} 
+          $for(expense.details)$\scriptsize \item $expense.details$ 
+          $endfor$ \end{itemize}
+          $endif$ &&&& \texttt{\normalsize:={$expense.price$}}\\
+          $endfor$\SThiderow &&&&&& 0tag(endexpense)\\\hhline{~~~====}
+\\\hhline{~~~----}
+@ \multicolumn{5}{r}{\textbf{Sum Fees $if(VAT)$ exc VAT $endif$}} & @ \$currency$ & \texttt{\normalsize:={sum(cell(startfee):cell(endfee)tag(feetotal))}}\\
+$if(VAT)$
+@ \multicolumn{5}{r}{\textbf{Sum VAT at $VAT$\%}} & @ \$currency$ & \texttt{\normalsize:={$VAT$/100*[0,-1]}}\\$endif$
+@ \multicolumn{5}{r}{\textbf{Sum Expenses}} & @   \$currency$
+&\texttt{\normalsize:={sum(cell(startexpense):cell(endexpense))tag(expensetotal)}}\\\hhline{~~~====}
+@ \multicolumn{5}{r}{\textbf{GRAND TOTAL}} & @ %
+    \$currency$ & \texttt{\normalsize:={sum(cell(expensetotal);cell(feetotal))tag(mytotal)}}
+        $endif$\\\hhline{=======}
+\end{spreadtab}\STmakegtag{mytotal}
+
+\normalfont
 
 \end{document}
