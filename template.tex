@@ -5,7 +5,7 @@
 %--------------------------------
 \usepackage{geometry} 
 \geometry{margin=2.5cm}
-\input{/Users/ezgranet/ezgranet-fonts.tex}
+\input{/Users/ezgranet/ezgranet-fonts-domitian.tex}
 \usepackage{xfp}
 \usepackage{longtable}
 \usepackage{multirow}
@@ -19,7 +19,10 @@
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
 \fancyfoot[L]{To: $for(to)$$to.name$ $endfor$}
-\fancyhead[c]{\textsc{\MakeUppercase $from$}\vspace*{1pt}}
+\fancyhead[c]{\textsc{\large\MakeUppercase $from$}\vspace*{1pt}}
+\fancyhead[r]{\footnotesize e: $fromemail$\vspace*{1pt}}
+\fancyhead[l]{\footnotesize tel: $fromtel$\vspace*{1pt}}
+
 \fancyfoot[c]{Invoice № $invoice-nr$}
 \fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
 \pagestyle{fancy}
@@ -27,6 +30,8 @@
     %pagestyle definition
     \renewcommand{\headrulewidth}{0pt}
     \fancyhead[c]{}
+        \fancyhead[r]{}
+            \fancyhead[l]{}
     \fancyfoot[c]{}
     \fancyfoot[l]{}
 \fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
@@ -142,7 +147,7 @@ $if(VAT)$
 \flushright
 $from$\\
 $for(fromaddress)$$fromaddress$\\$endfor$
-$fromcity$ \ttfamily$frompostcode$\normalfont\\
+$fromcity$ \ttfamily $frompostcode$\normalfont\\
 $for(fromcountry)$$fromcountry$\\$endfor$
 tel: \texttt{$fromtel$}\\
 e: \texttt{$fromemail$}\\
@@ -151,7 +156,6 @@ $if(regnum)$Company № \texttt{$regnum$}\\$endif$
 \end{minipage}
 
 	\begin{center}
-
 	\textit{has the pleasure of presenting, with sincerest compliments, to}
 \end{center}
 
@@ -167,15 +171,16 @@ e:  \ttfamily $for(to)$$to.email$$endfor$\\
  
 \begin{center}
 
-\textit{this}\\
-\LARGE\textbf{\scshape INVOICE}\normalsize
+\textit{this}
+
+\Large\textbf{\scshape INVOICE}\normalsize
 
 \sffamily
 	\begin{tabular}{¶l^l^l^l}
 \hdashline[1pt/1pt]\\\rowstyle{\bfseries\footnotesize\sffamily}  
 Account № &  Subject&   Issue Date  & \multicolumn{1}{!{\vrule width 1pt}l}{\bfseries Total Due}\\ 
- \texttt{262} &   \sffamily R V JONES & \ttfamily 2020-08-18 & \multicolumn{1}{!{\vrule width 1pt}l}{\multirow{3}{*}{\LARGE\bfseries\ttfamily \$currency$\xspace  
- \STtag{secretmytotal}
+ \texttt{262} &   \sffamily R V JONES & \ttfamily 2020-08-18 & \multicolumn{1}{!{\vrule width 1pt}l}{\multirow{3}{*}{\LARGE\textbf{\texttt{\$currency$\xspace  
+ \STtag{secretmytotal}}}
  }} \\
 \rowstyle{\bfseries\sffamily}
  Invoice № &  Sent Via & Due Date & \multicolumn{1}{!{\vrule width 1pt}l}{}  \\ 
