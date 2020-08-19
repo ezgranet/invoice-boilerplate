@@ -1,0 +1,59 @@
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xetex 2020.4.29)  18 AUG 2020 20:28
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**fonts.tex
+(./fonts.tex
+./fonts.tex:1: Undefined control sequence.
+l.1 \usepackage
+               {xspace}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./fonts.tex:2: Undefined control sequence.
+l.2 \usepackage
+               {fontspec} %Loads fontspec automatically
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./fonts.tex:3: Undefined control sequence.
+l.3 \setmainfont
+                [Mapping={tex-text},
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./fonts.tex:17: Undefined control sequence.
+l.17 \setmonofont
+                 [Mapping=tex-text,Scale=.917,
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./fonts.tex:27: Undefined control sequence.
+l.27 \setsansfont
+                 {Open Sans}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+)
+! Emergency stop.
+<*> fonts.tex
+             
+*** (job aborted, no legal \end found)
+
+No pages of output.

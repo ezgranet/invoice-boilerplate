@@ -3,9 +3,9 @@
 \usepackage{verbatim}
 % LAYOUT
 %--------------------------------
+\input{setup/fonts.tex}
 \usepackage{geometry} 
-\geometry{margin=2.5cm}
-\input{/Users/ezgranet/ezgranet-fonts-domitian.tex}
+\geometry{top=2.5cm,right=2.5cm,left=2.5cm,bottom=3cm}
 \usepackage{xfp}
 \usepackage{longtable}
 \usepackage{multirow}
@@ -18,13 +18,13 @@
 \RequirePackage{fancyhdr,lastpage}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
-\fancyfoot[L]{To: $for(to)$$to.name$ $endfor$}
-\fancyhead[c]{\textsc{\large\MakeUppercase $from$}\vspace*{1pt}}
+\fancyfoot[L]{To: $for(to)$$to.name$ $endfor$\vskip 3pt}
+\fancyhead[c]{\hrule width \textwidth height 1pt \vskip 2pt \textsc{\large\MakeUppercase $from$}\vspace*{1pt}}
 \fancyhead[r]{\footnotesize e: $fromemail$\vspace*{1pt}}
 \fancyhead[l]{\footnotesize tel: $fromtel$\vspace*{1pt}}
 
-\fancyfoot[c]{Invoice № $invoice-nr$}
-\fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
+\fancyfoot[c]{Invoice № $invoice-nr$\vskip 3pt \hrule width \textwidth height 1pt}
+\fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}\vskip 3pt}
 \pagestyle{fancy}
 \fancypagestyle{firstpage}{%
     %pagestyle definition
@@ -32,9 +32,9 @@
     \fancyhead[c]{}
         \fancyhead[r]{}
             \fancyhead[l]{}
-    \fancyfoot[c]{}
-    \fancyfoot[l]{}
-\fancyfoot[R]{{ \thepage{} of \pageref{LastPage}}}
+    \fancyfoot[c]{\vskip 4pt}
+    \fancyfoot[l]{\vskip 4pt}
+\fancyfoot[R]{\thepage{} of \pageref{LastPage}\vskip 4pt \hrule width \textwidth height 1pt}
 }
 
 % TABLE CUSTOMIZATION
@@ -147,16 +147,15 @@ $if(VAT)$
 \flushright
 $from$\\
 $for(fromaddress)$$fromaddress$\\$endfor$
-$fromcity$ \ttfamily $frompostcode$\normalfont\\
+$fromcity$ $frompostcode$\normalfont\\
 $for(fromcountry)$$fromcountry$\\$endfor$
-tel: \texttt{$fromtel$}\\
-e: \texttt{$fromemail$}\\
-$if(fromvat)$ VAT № \texttt{$fromvat$}\\$endif$
-$if(regnum)$Company № \texttt{$regnum$}\\$endif$
-\end{minipage}
-
+tel: $fromtel$\\
+e: $fromemail$\\
+$if(fromvat)$ VAT № $fromvat$\\$endif$
+$if(regnum)$Company № $regnum$\\$endif$
+\end{minipage}\\
 	\begin{center}
-	\textit{has the pleasure of presenting, with sincerest compliments, to}
+	\vspace*{-2ex}\textit{has the pleasure of presenting, with sincerest compliments, to}
 \end{center}
 
 %\setlength{\tabcolsep}{0pt}
@@ -164,13 +163,13 @@ $if(regnum)$Company № \texttt{$regnum$}\\$endif$
 \vspace*{-2em}
 $for(to)$$to.name$ $endfor$\\
 $for(to)$$to.street$$endfor$\\
-$for(to)$$to.city$$endfor$  \footnotesize\ttfamily $for(to)$$to.postcode$$endfor$\\\normalsize\normalfont
+$for(to)$$to.city$$endfor$ $for(to)$$to.postcode$$endfor$\\\normalsize\normalfont
 $for(to)$$to.country$$endfor$\\
-e:  \ttfamily $for(to)$$to.email$$endfor$\\
+e: $for(to)$$to.email$$endfor$\\
 \end{minipage}
+ \vspace*{-2.5ex}
  
 \begin{center}
-
 \textit{this}
 
 \Large\textbf{\scshape INVOICE}\normalsize
@@ -200,7 +199,7 @@ SWIFTBIC & IBAN\\\rowstyle{\ttfamily}BARCME & \multicolumn{3}{l}{\texttt{SM37032
 
 \centering
 \renewcommand{\arraystretch}{1.5} % Apply vertical padding to table cells
-\begin{spreadtab}{{longtable}[t t t]{lp{1cm}p{4cm}rrrr}}
+\begin{spreadtab}{{longtable}[ht!]{lp{1cm}p{4cm}rrrr}}
 \hhline{=======}
 @ \multicolumn{7}{c}{\textbf{Goods \& Services}}   \\
   @ \textbf{№} & @ \textbf{Date(s)} & @ \textbf{Description} & @ \textbf{Unit Price} & @ \textbf{Qty} & @ \textbf{Unit} &  @ \textbf{Total in GBP}

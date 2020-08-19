@@ -1,0 +1,27 @@
+\usepackage{xspace}
+\usepackage{fontspec} %Loads fontspec automatically
+\setmainfont[Mapping={tex-text}, 
+Scale=.96,
+Numbers={OldStyle},
+	Ligatures={TeX,Common},
+BoldFont={Cochineal Bold}, 
+ SmallCapsFont={Cochineal Roman},
+SmallCapsFeatures={LetterSpace=20,
+RawFeature={+pnum,+onum,+smcp},},
+ ItalicFont={Cochineal Italic},
+ % ItalicFeatures={
+ % RawFeature={+hlig,+dlig,+liga,+pnum,+onum}, 
+%  },
+ BoldItalicFont={Cochineal Bold Italic}
+]{Cochineal Roman}
+\setmonofont[Mapping=tex-text,Scale=.917,
+RawFeature={
++ss03,
++ss02
+},
+LetterSpace=7,
+%WordSpace=,
+ItalicFont={Source Code Pro Italic},
+BoldFont={Source Code Pro Bold},
+BoldItalicFont={Source Code Pro Bold Italic}]{Source Code Pro} 
+\setsansfont{Open Sans}
